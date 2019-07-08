@@ -8,7 +8,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="{% static '/vendors/bootstrap/css/bootstrap.css' %}" />
 	<link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}" />
-
+  <script src="https://hammerjs.github.io/dist/hammer.js"></script>
 	<script src="{% static '/vendors/jquery/jquery-3.3.1.min.js' %}"></script>
 	<script src="{% static '/vendors/jquery-ui/jquery-ui.min.js' %}"></script>
 	<script src="{% static '/vendors/hammer/hammer.min.js' %}"></script>
@@ -84,7 +84,52 @@
 		</div>
 	</div>
 	<script>
-	  // your solution here
+    $(document).ready(function() {
+     
+      var rotateBox = document.getElementById('rotate-box');
+      var pinchBox = document.getElementById('pinch-box');
+   
+      var pressBox = document.getElementById('press-box');
+      var panBox = document.getElementById('pan-box');
+      var tapBox = document.getElementById('tap-box');
+      var swipeBox = document.getElementById('swipe-box');
+
+    
+      var rb = new Hammer(rotateBox);
+      var pib = new Hammer(pinchBox);
+      
+      var prb = new Hammer(pressBox);
+      var pab = new Hammer(panBox);
+      var tb = new Hammer(tapBox);
+      var sb = new Hammer(swipeBox);
+    
+      rb.get('rotate').set({ enable: true });
+      pib.get('pinch').set({ enable: true });
+      
+      rb.on("rotate", function(ev){
+        rotateBox.textContent = ev.type +" gesture detected.";
+      });
+      pib.on("pinch", function(ev){
+        pinchBox.textContent = ev.type +" gesture detected.";
+      });
+      
+      
+      prb.on("press", function(ev){
+        pressBox.textContent = ev.type+" gesture detected";
+      });
+      pab.on("panleft panright", function(ev){
+        panBox.textContent = ev.type+" gesture detected.";
+      });
+      tb.on("tap", function(ev){
+        tapBox.textContent = ev.type +" gesture detected."
+      });
+     
+      sb.on("swipe", function(ev){
+        swipeBox.textContent = ev.type+" gesture detected";
+      });
+      
+    });
+	  
   </script>
 </body>
 </html>
